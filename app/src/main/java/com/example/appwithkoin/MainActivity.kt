@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.example.appwithkoin.feature.authscreen.loginscreen.LoginScreen
 import com.example.appwithkoin.feature.homescreen.HomeScreen
+import com.example.appwithkoin.navigation.NavGraph
 import com.example.appwithkoin.ui.theme.AppWithKoinTheme
 
 class MainActivity : ComponentActivity() {
@@ -13,7 +15,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AppWithKoinTheme {
-                    HomeScreen()
+                NavGraph()
             }
         }
     }

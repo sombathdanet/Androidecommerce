@@ -4,6 +4,7 @@ import com.example.appwithkoin.feature.homescreen.data.repository.ProductReposit
 import com.example.appwithkoin.feature.homescreen.data.repository.ProductRepositoryImp
 import org.koin.dsl.module
 
+
 val repositoryModule = module{
     single<ProductRepository> { ProductRepositoryImp(get()) }
 }

@@ -1,14 +1,18 @@
-package com.example.appwithkoin.api
-import com.example.appwithkoin.feature.homescreen.data.model.response.ProductResponseItem
+import com.example.appwithkoin.feature.homescreen.data.model.response.CategoryResponse
+import com.example.appwithkoin.feature.homescreen.data.model.response.ProductHome
 import retrofit2.Response
 import retrofit2.http.GET
 
-class  ServerRoute{
+class  ENDPOINT{
     companion object{
-        const val  PRODUCT = "products"
+        const val  CAT_G = "get-product-category.php"
+        const val ALL_PRODUCT = "get-product-home.php"
+        const val GET_ONE_PRODUCT = "get-product-category.php"
     }
 }
-interface ApiService  {
-    @GET(ServerRoute.PRODUCT)
-    suspend fun getHomeProduct(): Response<List<ProductResponseItem>>
+interface ApiService{
+    @GET(value = ENDPOINT.CAT_G)
+    suspend fun getCategories(): Response<CategoryResponse>
+    @GET(value = ENDPOINT.ALL_PRODUCT)
+    suspend fun getHomeProduct(): Response<ProductHome>
 }

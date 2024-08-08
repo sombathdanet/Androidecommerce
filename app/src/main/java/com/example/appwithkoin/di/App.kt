@@ -7,7 +7,11 @@ class MyApp: Application() {
     override fun onCreate() {
         super.onCreate()
         startKoin {
-            modules(appModule, networkModule,repositoryModule)
+            modules(
+                appModule,
+                networkModule,
+                repositoryModule
+            )
         }
     }
 }

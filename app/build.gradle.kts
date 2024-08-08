@@ -78,4 +78,6 @@ dependencies {
     // coil
     implementation(libs.coil)          
     implementation(libs.coil.compose)
+    //navigation
+    implementation(libs.navigation.compose)
 }

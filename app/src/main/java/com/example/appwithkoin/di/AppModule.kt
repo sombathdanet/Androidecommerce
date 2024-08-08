@@ -1,8 +1,10 @@
 package com.example.appwithkoin.di
-import HomeVM
+import com.example.appwithkoin.feature.homescreen.HomeScreenViewModel
+import com.example.appwithkoin.feature.authscreen.loginscreen.LoginVM
 import org.koin.compose.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
-    viewModel { HomeVM(get()) }
+    viewModel { HomeScreenViewModel(get()) }
+    viewModel { LoginVM() }
 }
