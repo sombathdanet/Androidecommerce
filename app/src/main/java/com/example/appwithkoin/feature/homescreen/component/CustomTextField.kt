@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.appwithkoin.util.ColorApp
 
 @Composable
 fun CustomTextField(
@@ -42,7 +43,7 @@ fun CustomTextField(
         colors = TextFieldDefaults.colors(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            unfocusedContainerColor = Color.Blue,
+            unfocusedContainerColor =ColorApp.whiteGray,
             focusedContainerColor = Color.White
         ),
         placeholder = {

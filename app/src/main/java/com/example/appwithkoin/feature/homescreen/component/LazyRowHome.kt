@@ -12,14 +12,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.appwithkoin.feature.homescreen.data.model.response.CategoryData
+import com.example.appwithkoin.feature.homescreen.data.network.model.response.MainCategoryData
+import com.example.appwithkoin.util.XPadding
+import com.example.appwithkoin.util.XTextMedium
+import com.example.appwithkoin.util.XTextSmall
 
 @Composable
 fun LazyRowHome(
     url:String="",
-    listCategory: List<CategoryData> = emptyList(),
+    listCategory: List<MainCategoryData> = emptyList(),
     onClick:()-> Unit ={},
     selectIndex :(Int) -> Unit ={}
 ){
@@ -33,20 +37,25 @@ fun LazyRowHome(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 AsyncImage(
-                    modifier = Modifier.clickable(
-                        onClick ={
-                            onClick()
-                            selectIndex(index)
-                        })
+                    modifier = Modifier
+                        .clickable(
+                            onClick = {
+                                onClick()
+                                selectIndex(index)
+                            })
                         .size(70.dp)
                         .clip(
                             shape = CircleShape
                         )
                         .fillMaxSize(),
-                    model = listCategory[index].images[0] , contentDescription ="",
+                    model = listCategory[index].image , contentDescription ="",
                     contentScale = ContentScale.Crop,
                 )
-                Spacer(modifier = Modifier.height(5.dp))
+                Spacer(modifier = Modifier.height(XPadding.Medium))
+                XTextSmall(
+                    fontWeight = FontWeight.W400,
+                    text = listCategory[index].name
+                )
             }
         }
     }

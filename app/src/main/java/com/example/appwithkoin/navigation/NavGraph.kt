@@ -20,5 +20,6 @@ fun NavGraph(
         addLoginRoute(navController = navHostController)
         addHomeRoute(navController = navHostController)
         addSignUpRoute(navController = navHostController)
+        addBottomNavigationGraph(navController = navHostController)
     }
 }

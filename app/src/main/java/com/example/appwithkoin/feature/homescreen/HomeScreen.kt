@@ -7,16 +7,18 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.ShoppingCart
@@ -36,7 +38,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.appwithkoin.util.XTextLarge
+import com.example.appwithkoin.feature.homescreen.component.CircleProfile
+import com.example.appwithkoin.feature.homescreen.component.HomeBigLazyRow
+import com.example.appwithkoin.feature.homescreen.component.TitleRow
+import com.example.appwithkoin.util.ColorApp
+import com.example.appwithkoin.util.XPadding
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 
@@ -54,22 +60,28 @@ fun HomeContent(state: State<HomeScreenState>) {
         topBar = {
             Row(
                 Modifier
+                    .statusBarsPadding()
                     .fillMaxWidth()
                     .background(color = Color.White),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ){
+                CircleProfile(
+                    url = "https://i.pinimg.com/564x/b9/bb/c7/b9bbc72381c315bde9a515640ce23b29.jpg"
+                )
                 Box(
                     modifier = Modifier
                         .padding(horizontal = 15.dp, vertical = 15.dp)
                         .background(
-                            color = Color.Blue,
+                            color = ColorApp.whiteGray,
                             shape = RoundedCornerShape(20.dp)
                         )
                 ) {
                     Text(
                         text = "Men",
-                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
+                        modifier = Modifier
+                            .padding(horizontal = 20.dp, vertical = 10.dp)
+                            .background(color = ColorApp.whiteGray),
                         style = TextStyle(
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold
@@ -81,7 +93,7 @@ fun HomeContent(state: State<HomeScreenState>) {
                         .padding(horizontal = 15.dp, vertical = 15.dp)
                         .size(50.dp)
                         .background(
-                            color = Color.Black,
+                            color = ColorApp.mainColor,
                             shape = CircleShape
                         ),
                     contentAlignment = Alignment.Center
@@ -99,36 +111,51 @@ fun HomeContent(state: State<HomeScreenState>) {
             }
         }
     ) {
-            paddingValues ->
-        Column(
-            modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .padding(paddingValues)
-                .then(
-                    Modifier.padding(horizontal = 20.dp)
-                )
-        ) {
-            val searchState = remember {
-                mutableStateOf(TextFieldValue(""))
-            }
+            paddingValues -> BuildBody(
+                paddingValues,
+                state = state
+            )
+    }
+}
+@Composable
+private  fun BuildBody(
+    paddingValues: PaddingValues,
+    state: State<HomeScreenState>
+) {
+    val searchState = remember {
+        mutableStateOf(TextFieldValue(""))
+    }
 
-            CustomTextField(textState = searchState, icon = Icons.Rounded.Search,"Search")
-            Spacer(modifier = Modifier.height(20.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                XTextLarge(modifier = Modifier, text = "Categories")
-                XTextLarge(modifier = Modifier, text = "SeeAll")
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-            if(state.value.listCategory.isNotEmpty()){
+    LazyColumn(
+        modifier = Modifier
+            .padding(
+                paddingValues = paddingValues
+            )
+            .padding(
+                horizontal = XPadding.ExtraLarge
+            ),
+        verticalArrangement = Arrangement.spacedBy(XPadding.Large)
+    ) {
+        item {
+               CustomTextField(
+                   textState = searchState,
+                   icon = Icons.Rounded.Search
+                   ,"Search",)
+        }
+        item {
+            TitleRow(firstTitle = "Categories", secondTitle = "SeeAll")
+        }
+        item{
                 LazyRowHome(
-                    listCategory = state.value.listCategory ,
+                    listCategory = state.value.listMainCategory
                 )
-            }
-            Spacer(modifier = Modifier.height(20.dp))
+        }
+        items(state.value.listHomeTrending){
+            TitleRow(firstTitle = it.title)
+            Spacer(modifier = Modifier.height(XPadding.Large))
+            HomeBigLazyRow(
+                listAllProduct = it.items
+            )
         }
     }
 }

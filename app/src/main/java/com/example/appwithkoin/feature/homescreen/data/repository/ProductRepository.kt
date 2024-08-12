@@ -1,11 +1,12 @@
 package com.example.appwithkoin.feature.homescreen.data.repository
-import com.example.appwithkoin.feature.homescreen.data.model.response.CategoryData
-import com.example.appwithkoin.feature.homescreen.data.model.response.ProductData
-import com.example.appwithkoin.feature.homescreen.data.model.response.ProductHome
-import com.example.appwithkoin.feature.homescreen.data.model.response.ProductResponseItem
+import com.example.appwithkoin.feature.homescreen.data.network.model.response.HomeTrendingData
+import com.example.appwithkoin.feature.homescreen.data.network.model.response.HomeTrendingResponse
+import kotlinx.coroutines.flow.Flow
+import com.example.appwithkoin.feature.homescreen.data.network.model.response.MainCategoryData
+import com.example.appwithkoin.util.network.DataState
 
 
 interface ProductRepository{
-    suspend fun getHomeProduct():List<ProductData>
-    suspend fun getCategoryProduct():List<CategoryData>
+    suspend fun getMainCategory():Flow<DataState<List<MainCategoryData>>>
+    suspend fun getHomeTrending():Flow<DataState<List<HomeTrendingData>>>
 }

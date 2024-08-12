@@ -1,18 +1,23 @@
-import com.example.appwithkoin.feature.homescreen.data.model.response.CategoryResponse
-import com.example.appwithkoin.feature.homescreen.data.model.response.ProductHome
-import retrofit2.Response
-import retrofit2.http.GET
+package com.example.appwithkoin.api
 
-class  ENDPOINT{
-    companion object{
-        const val  CAT_G = "get-product-category.php"
-        const val ALL_PRODUCT = "get-product-home.php"
-        const val GET_ONE_PRODUCT = "get-product-category.php"
-    }
+import com.example.appwithkoin.util.ServerRoute
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
+internal fun provideRetrofit(): Retrofit {
+    return Retrofit.Builder()
+        .baseUrl(ServerRoute.BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .client(provideOkHttpClient())
+        .build()
 }
-interface ApiService{
-    @GET(value = ENDPOINT.CAT_G)
-    suspend fun getCategories(): Response<CategoryResponse>
-    @GET(value = ENDPOINT.ALL_PRODUCT)
-    suspend fun getHomeProduct(): Response<ProductHome>
+internal fun provideOkHttpClient(): OkHttpClient {
+    val logging = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+    return OkHttpClient.Builder()
+        .addInterceptor(logging)
+        .build()
 }
