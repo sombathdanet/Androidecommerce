@@ -50,7 +50,7 @@ private  fun EmptyNotification(){
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_bell)
+            painter = painterResource(id = R.drawable.ic_launcher_foreground)
             , contentDescription ="", colorFilter = ColorFilter.tint(color = Color.Yellow)
         )
         XTextLarge(

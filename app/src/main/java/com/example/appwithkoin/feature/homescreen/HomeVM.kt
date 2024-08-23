@@ -18,14 +18,14 @@ class  HomeScreenViewModel(private val productRepo:ProductRepository):ViewModel(
     private  val _state = MutableStateFlow(HomeScreenState())
     val state : MutableStateFlow<HomeScreenState> get() = _state
     init {
-        getCategoryHome()
-        getHomeProductTrending()
+        //getCategoryHome()
+    //    getHomeProductTrending()
     }
     private fun getCategoryHome(){
           viewModelScope.launch {
               productRepo.getMainCategory().collect {
                   when(it){
-                      is DataState.Error<*> -> {
+                      is DataState.Error -> {
                           _state.value = _state.value.copy(
                               loading = false
                           )
@@ -49,7 +49,7 @@ class  HomeScreenViewModel(private val productRepo:ProductRepository):ViewModel(
         viewModelScope.launch {
             productRepo.getHomeTrending().collect{
                 when(it){
-                    is DataState.Error<*> -> {
+                    is DataState.Error -> {
                         _state.value = _state.value.copy(
                             loading = false
                         )

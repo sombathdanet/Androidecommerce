@@ -1,12 +1,11 @@
 package com.example.appwithkoin.feature.homescreen.data.repository
-import android.provider.ContactsContract.Data
 import kotlinx.coroutines.flow.Flow
 import com.example.appwithkoin.feature.homescreen.data.network.NetworkData
 import com.example.appwithkoin.feature.homescreen.data.network.model.response.HomeTrendingData
-import com.example.appwithkoin.feature.homescreen.data.network.model.response.HomeTrendingResponse
 import com.example.appwithkoin.feature.homescreen.data.network.model.response.MainCategoryData
 import com.example.appwithkoin.util.network.DataState
 import kotlinx.coroutines.flow.flow
+import java.io.IOException
 
 class   ProductRepositoryImp(
     private  val homeNetworkData: NetworkData
@@ -18,7 +17,7 @@ class   ProductRepositoryImp(
             val res = homeNetworkData.getMainCategory()
             emit(DataState.Success(res.data))
         }catch (e:Exception){
-            emit(DataState.Error(e))
+            emit(DataState.Error(e.message.toString()))
         }
     }
 
@@ -27,8 +26,8 @@ class   ProductRepositoryImp(
         try {
             val res = homeNetworkData.getTrendingHome()
             emit(DataState.Success(res.data))
-        }catch (e:Exception){
-            emit(DataState.Error(e))
+        }catch (e: Exception){
+            emit(DataState.Error(e.message.toString()))
         }
     }
 }

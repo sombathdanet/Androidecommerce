@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    kotlin("plugin.serialization") version "1.8.10"
+    id("kotlin-parcelize")
 }
 
 android {
@@ -71,6 +73,7 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.compose)
     implementation(libs.koin.compose.viewmodel)
+    implementation(libs.koin.android)
     //Retrofit
     implementation(libs.retrofit)
     implementation(libs.gson)
@@ -82,4 +85,8 @@ dependencies {
     implementation(libs.coil.compose)
     //navigation
     implementation(libs.navigation.compose)
+    // data store
+    implementation(libs.datastore.preferences)
+    //decode
+    implementation(libs.kotlinx.serialization.json)
 }
